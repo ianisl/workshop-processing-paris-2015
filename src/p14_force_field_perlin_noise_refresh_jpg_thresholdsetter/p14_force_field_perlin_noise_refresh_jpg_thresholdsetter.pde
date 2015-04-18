@@ -45,7 +45,7 @@ void setup()
 
 void draw() 
 {
-    if (minimThresholdSetter.lastSampleLevel > 0)
+    if (minimThresholdSetter.lastLevel > 0)
     {
         field.noiseScale = random(maxNoiseScale); // Sélection d'une nouvelle valeur aléatoire de noiseScale à chaque fois que le seuil est franchi
     }

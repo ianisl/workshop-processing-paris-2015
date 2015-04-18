@@ -52,7 +52,7 @@ public class ThresholdSetter extends controlP5.Controller
                 p.beginShape();
                 for (int i = bufferSize - 1; i >= 0; i--)
                 {
-                    p.vertex(map(i, bufferSize - 1, 0, getWidth(), 0), max(map(buffer[i], minValue, maxValue, getHeight(), 0), 0));
+                    p.vertex(map(i, bufferSize - 1, 0, getWidth(), 0), map(buffer[i], minValue, maxValue, getHeight(), 0));
                 }
                 p.endShape();
                 p.fill(captionLabelColor); // Draw caption label
@@ -103,6 +103,10 @@ public class ThresholdSetter extends controlP5.Controller
 
     public float addToBuffer(float sample)
     {
+        if (sample > maxValue)
+        {
+            sample = maxValue; // Clip
+        }
         System.arraycopy(buffer, 1, buffer, 0, bufferSize - 1);
         buffer[bufferSize - 1] = sample;
         float distanceToThreshold = sample - getValue();
@@ -187,6 +191,11 @@ public class ThresholdSetter extends controlP5.Controller
         return 1 - ((float) thresholdLineY) / getHeight();
     }
 
+    public float getThresholdLevel()
+    {
+        return getValue();
+    }
+
     public ThresholdSetter setThresholdPercentage(float thresholdPercentage)
     {
         thresholdPercentage = max(min(thresholdPercentage, 1), 0);
@@ -205,15 +214,15 @@ public class ThresholdSetter extends controlP5.Controller
 public class MinimThresholdSetter extends ThresholdSetter
 {
     /* A ThresholdSetter fed with the mean level of a Minim stereo input.
-     * The field 'lastSampleLevel' gives the distance of the last processed sample
+     * The field 'lastLevel' gives the distance of the last processed sample
      * to the signal level, if it is a truly position detection (ie if it was not)
-     * detected too soon after a previous detection. Otherwise, 'lastSampleLevel'
+     * detected too soon after a previous detection. Otherwise, 'lastLevel'
      * will be equal to -1.
      */
     protected Minim minim;
     protected AudioInput audioInput;
     protected int minimBufferSize;
-    public float lastSampleLevel; // By convention, = to distance above signal level is last detection is a truly position one, equal to -1 otherwise
+    public float lastLevel; // By convention, = distance above signal level is last detection is a truly position one, equal to -1 otherwise
 
     public MinimThresholdSetter(ControlP5 cp5, String name, int minimBufferSize, PApplet applet)
     {
@@ -226,10 +235,10 @@ public class MinimThresholdSetter extends ThresholdSetter
 
     public void pre()
     {
-        lastSampleLevel = this.addToBuffer(audioInput.left.level()); // add the mean level of the current buffer to the MinimThresholdSetters' internal buffer
+        lastLevel = this.addToBuffer(audioInput.left.level()); // add the mean level of the current buffer to the MinimThresholdSetters' internal buffer
         if (!this.isLastDetectionPositive)
         {
-            lastSampleLevel = -1;
+            lastLevel = -1;
         }
     }
 }

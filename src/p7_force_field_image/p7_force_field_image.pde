@@ -13,7 +13,7 @@ void setup()
     size(800, 800);
     smooth();
     background(255);
-    field = new ImageField(fieldIntensity, "mies.jpg"); // Conseil : placer les images dans le répertoire 'data' et donner les chemins d'accès aux images de manière relative à ce répertoire, ce qui revient à simplement donner le nom du fichier image.
+    field = new ImageField(fieldIntensity, "xblur.jpg"); // Conseil : placer les images dans le répertoire 'data' et donner les chemins d'accès aux images de manière relative à ce répertoire, ce qui revient à simplement donner le nom du fichier image.
     agents = new ArrayList<Agent>();
     for (int i = 0; i < agentCount; i++)
     {

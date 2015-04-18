@@ -31,7 +31,7 @@ class Agent
         previousPosition = position.get(); // Sauvegarde de la position précédente
         position.x += cos(angle) * stepSize; // L'agent avance sur une distance égale à 'stepSize' à partir de sa position actuelle, selon un angle 'angle'
         position.y += sin(angle) * stepSize;
-        if (isOutsideSketch() > 0 && isPositionResetWhenOutside) 
+        if (isPositionResetWhenOutside && isOutsideSketch() > 0) 
         {
             position = new PVector(random(width), random(height)); // Si l'agent sort du sketch, on lui attribue une nouvelle position aléatoire
             previousPosition = position.get();

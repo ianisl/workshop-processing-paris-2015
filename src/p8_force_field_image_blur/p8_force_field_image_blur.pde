@@ -14,7 +14,7 @@ void setup()
     size(800, 800);
     smooth();
     background(255);
-    field = new ImageField(fieldIntensity, "mies.jpg");
+    field = new ImageField(fieldIntensity, "x.jpg");
     field.blur(blurLevel); // Application d'un flou à l'image pour obtenir des trajectoires plus fluides. Plus la valeur est élevée, plus le calcul sera long à effectuer
     agents = new ArrayList<Agent>();
     for (int i = 0; i < agentCount; i++)

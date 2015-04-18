@@ -2,6 +2,7 @@
 int agentCount = 3;
 float agentAlpha = 90;
 float fieldIntensity = 0.0005;
+float blurLevel = 20;
 
 // Variables
 ImageField field;
@@ -12,7 +13,8 @@ void setup()
     size(800, 800);
     smooth();
     background(255);
-    field = new ImageField(fieldIntensity, "mies.jpg");
+    field = new ImageField(fieldIntensity, "x.jpg");
+    field.blur(20);
     agents = new ArrayList<Agent>();
     for (int i = 0; i < agentCount; i++)
     {
